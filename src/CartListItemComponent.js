@@ -3,11 +3,21 @@ import { ListItem, Left, Right, Body, Text, Thumbnail, Button, Icon } from 'nati
 import PropTypes from 'prop-types';
 
 class CartListItemComponent extends Component {
-    state = {  };
+    constructor(props) {
+      super(props);
+
+      this.removeItem = this.removeItem.bind(this);
+    }
+
+    removeItem() {
+      const { item } = this.props;
+
+      this.props.onRemove(item);
+    }
 
     render() {
       const { item } = this.props;
-
+      console.log('Props on CartListItemComponent: ', this.props)
         return (
           <ListItem thumbnail>
             <Left>
@@ -18,7 +28,10 @@ class CartListItemComponent extends Component {
               <Text note numberOfLines={1}>Subtotal ${ item.total }</Text>
             </Body>
             <Right>
-              <Button transparent>
+              <Button
+                transparent
+                onPress={ this.removeItem }
+                >
                 <Icon name='trash' />
               </Button>
             </Right>
