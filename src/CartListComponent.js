@@ -15,7 +15,8 @@ class CartListComponent extends Component {
     return (
       <CartListItemComponent
         item={ item }
-        onRemove={ this.props.onRequestItemRemove }/>
+        onRemove={ this.props.onRequestItemRemove }
+        updateItem={ this.props.updateItem }/>
     )
   }
 

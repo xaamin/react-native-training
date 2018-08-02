@@ -6,13 +6,30 @@ class CartListItemComponent extends Component {
     constructor(props) {
       super(props);
 
-      this.removeItem = this.removeItem.bind(this);
+      this.updateQuantityMinusOne = this.updateQuantityMinusOne.bind(this);
+      this.updateQuantityPLusOne = this.updateQuantityPLusOne.bind(this);
     }
 
     removeItem() {
       const { item } = this.props;
 
       this.props.onRemove(item);
+    }
+
+    updateQuantityMinusOne() {
+      this.updateItem(-1);
+    }
+
+    updateQuantityPLusOne() {
+      this.updateItem(1);
+    }
+
+    updateItem(quantity) {
+      const { item } = this.props;
+      item.quantity += quantity;
+      item.total = item.quantity * item.unit_price;
+
+      this.props.updateItem(item);
     }
 
     render() {
@@ -28,6 +45,13 @@ class CartListItemComponent extends Component {
               <Text note numberOfLines={1}>Subtotal ${ item.total }</Text>
             </Body>
             <Right>
+
+              <Button transparent onPress={ this.updateQuantityMinusOne }>
+                <Icon name='remove' />
+              </Button>
+              <Button transparent onPress={ this.updateQuantityPLusOne }>
+                <Icon name='add' />
+              </Button>
               <Button
                 transparent
                 onPress={ this.removeItem }

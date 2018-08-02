@@ -32,6 +32,7 @@ class CartComponent extends Component {
     this.addItem = this.addItem.bind(this);
     //this.removeItem = this.removeItem.bind(this);
     this.confirmItemRemove = this.confirmItemRemove.bind(this);
+    this.updateItem = this.updateItem.bind(this);
   }
 
   addItem() {
@@ -83,7 +84,13 @@ class CartComponent extends Component {
   }
 
   updateItem(item) {
+    const items = this.state.items.map((_item) => {
+      return _item.id === item.id ? item : _item;
+    });
 
+    this.setState({
+      items
+    });
   }
 
   cartCheckout() {
@@ -101,6 +108,7 @@ class CartComponent extends Component {
 
           <CartListComponent
             onRequestItemRemove={ this.confirmItemRemove }
+            updateItem={ this.updateItem }
             items={ items }/>
 
           <Button
