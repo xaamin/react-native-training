@@ -15,6 +15,7 @@ import store from './src/redux/store';
 
 import CartComponent from './src/cart/CartComponent';
 import CounterComponent from './src/counter/CounterComponent';
+import SagaComponent from './src/counter/SagaComponent';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -51,7 +52,7 @@ export default class App extends Component<Props> {
   render() {
     return (
       <Provider store={ store }>
-        <CounterComponent />
+        <SagaComponent />
       </Provider>
     );
   }

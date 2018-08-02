@@ -1,9 +1,15 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga'
+
+import posts from './sagas';
 
 const initialState = {
     counter: 0,
-    other: {
-
+    other: { },
+    posts: {
+        requesting: false,
+        data: null,
+        error: null
     }
 }
 
@@ -27,6 +33,36 @@ const reducer = (state = initialState, action) => {
             }
         break;
 
+        case 'POSTS_REQUESTING':
+            newState = {
+                ...state,
+                posts: {
+                    ...state.posts,
+                    requesting: action.payload,
+                }
+            }
+        break;
+
+        case 'POSTS_FETCH_SUCCESS':
+            newState = {
+                ...state,
+                posts: {
+                    ...state.posts,
+                    data: action.payload
+                }
+            }
+        break;
+
+        case 'POSTS_FETCH_ERROR':
+            newState = {
+                ...state,
+                posts: {
+                    ...state.posts,
+                    error: action.payload
+                }
+            }
+        break;
+
         default:
             newState = state;
         break;
@@ -36,6 +72,10 @@ const reducer = (state = initialState, action) => {
     return newState;
 }
 
-const store = createStore(reducer)
+const sagaMiddleware = createSagaMiddleware()
+
+const store = createStore(reducer, applyMiddleware(sagaMiddleware))
+
+sagaMiddleware.run(posts)
 
 export default store;
