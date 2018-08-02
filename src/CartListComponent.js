@@ -5,9 +5,18 @@ import PropTypes from 'prop-types';
 import CartListItemComponent from './CartListItemComponent';
 
 class CartListComponent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.renderItem = this.renderItem.bind(this);
+  }
+
   renderItem({ item }) {
     return (
-      <CartListItemComponent item={ item } />
+      <CartListItemComponent
+        item={ item }
+        onRemove={ this.props.onRequestItemRemove }
+        updateItem={ this.props.updateItem }/>
     )
   }
 
@@ -17,7 +26,7 @@ class CartListComponent extends Component {
 
   render() {
       const { items } = this.props;
-
+      console.log('Props on CartListComponent', this.props)
       return (
         <FlatList
           data={ items }

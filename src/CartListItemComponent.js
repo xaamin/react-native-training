@@ -3,11 +3,38 @@ import { ListItem, Left, Right, Body, Text, Thumbnail, Button, Icon } from 'nati
 import PropTypes from 'prop-types';
 
 class CartListItemComponent extends Component {
-    state = {  };
+    constructor(props) {
+      super(props);
+
+      this.updateQuantityMinusOne = this.updateQuantityMinusOne.bind(this);
+      this.updateQuantityPLusOne = this.updateQuantityPLusOne.bind(this);
+    }
+
+    removeItem() {
+      const { item } = this.props;
+
+      this.props.onRemove(item);
+    }
+
+    updateQuantityMinusOne() {
+      this.updateItem(-1);
+    }
+
+    updateQuantityPLusOne() {
+      this.updateItem(1);
+    }
+
+    updateItem(quantity) {
+      const { item } = this.props;
+      item.quantity += quantity;
+      item.total = item.quantity * item.unit_price;
+
+      this.props.updateItem(item);
+    }
 
     render() {
       const { item } = this.props;
-
+      console.log('Props on CartListItemComponent: ', this.props)
         return (
           <ListItem thumbnail>
             <Left>
@@ -18,7 +45,17 @@ class CartListItemComponent extends Component {
               <Text note numberOfLines={1}>Subtotal ${ item.total }</Text>
             </Body>
             <Right>
-              <Button transparent>
+
+              <Button transparent onPress={ this.updateQuantityMinusOne }>
+                <Icon name='remove' />
+              </Button>
+              <Button transparent onPress={ this.updateQuantityPLusOne }>
+                <Icon name='add' />
+              </Button>
+              <Button
+                transparent
+                onPress={ this.removeItem }
+                >
                 <Icon name='trash' />
               </Button>
             </Right>
