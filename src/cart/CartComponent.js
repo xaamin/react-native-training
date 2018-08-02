@@ -101,7 +101,21 @@ class CartComponent extends Component {
     const { items } = this.state;
 
       return (
-        <View>
+        <Container>
+        <Header>
+          <Left>
+            <Button transparent>
+              <Icon name='cart' />
+            </Button>
+          </Left>
+          <Body>
+            <Title>
+              Shopping cart
+            </Title>
+          </Body>
+          <Right />
+        </Header>
+        <Content padder>
           <H3>
               Items in your cart
           </H3>
@@ -118,7 +132,8 @@ class CartComponent extends Component {
           </Button>
 
           <CardCheckoutComponent items={ items } />
-        </View>
+        </Content>
+      </Container>
       );
   }
 }
