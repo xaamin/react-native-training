@@ -9,8 +9,12 @@
 import React, {Component} from 'react';
 import { Platform, StyleSheet, FlatList } from 'react-native';
 import { Container, Header, Left, Icon, Button, Body, Right, Title, Content, H3, Text, ListItem, Thumbnail, Card, CardItem }  from 'native-base';
+import { Provider  } from 'react-redux';
 
-import CartComponent from './src/CartComponent';
+import store from './src/redux/store';
+
+import CartComponent from './src/cart/CartComponent';
+import CounterComponent from './src/counter/CounterComponent';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -46,24 +50,9 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-      <Container>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name='cart' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>
-              Shopping cart
-            </Title>
-          </Body>
-          <Right />
-        </Header>
-        <Content padder>
-          <CartComponent />
-        </Content>
-      </Container>
+      <Provider store={ store }>
+        <CounterComponent />
+      </Provider>
     );
   }
 }
