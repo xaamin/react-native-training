@@ -3,12 +3,43 @@ import PropTypes from 'prop-types';
 import { Container, Header, Body, Right, Left, Title, Content, Text, Grid, Row, Col, Button } from 'native-base';
 import { connect } from 'react-redux';
 
+import IncrementButton from './IncrementButton';
+import DecrementButton from './DecrementButton';
+
 class CounterComponent extends Component {
   constructor(props) {
     super(props);
 
     this.increment = this.increment.bind(this);
     this.decrement = this.decrement.bind(this);
+  }
+
+  // Mounting events
+  componentWillMount() {
+    console.log('COUNTER:: componentWillMount fired');
+  }
+
+  componentDidMount() {
+    console.log('COUNTER:: componentDidMount fired');
+  }
+
+  componentWillUnmount() {
+    console.log('COUNTER:: componentWillUnmount fired');
+  }
+
+  // Update events
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('COUNTER:: shouldComponentUpdate fired');
+
+  //   return false;
+  // }
+
+  componentWillUpdate() {
+    console.log('COUNTER:: componentWillUpdate fired');
+  }
+
+  componentDidUpdate() {
+    console.log('COUNTER:: componentDidUpdate fired');
   }
 
   increment() {
@@ -30,7 +61,8 @@ class CounterComponent extends Component {
   }
 
   render() {
-    console.log('ON RENDER COUNTER COMPONENT', this.props);
+    console.log('COUNTER:: render fired');
+
     return (
       <Container>
         <Header>
@@ -45,14 +77,10 @@ class CounterComponent extends Component {
             <Grid>
                 <Row>
                     <Col>
-                        <Button onPress={ this.increment }>
-                            <Text>Increment</Text>
-                        </Button>
+                        <IncrementButton value={ this.props.counter } increment={ this.increment } />
                     </Col>
                     <Col>
-                        <Button onPress={ this.decrement }>
-                            <Text>Decrement</Text>
-                        </Button>
+                        <DecrementButton value={ this.props.counter } decrement={ this.decrement } />
                     </Col>
                 </Row>
             </Grid>
